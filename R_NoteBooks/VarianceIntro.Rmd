@@ -1,0 +1,50 @@
+---
+title: "Variance in R"
+output: html_notebook
+---
+```{r message=FALSE, warning=FALSE}
+# load libraries
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# load data
+teacher_one_grades <- c(83.42, 88.04, 82.12, 85.02, 82.52, 87.47, 84.69, 85.18, 86.29, 85.53, 81.29, 82.54, 83.47, 83.91, 86.83, 88.5, 84.95, 83.79, 84.74, 84.03, 87.62, 81.15, 83.45, 80.24, 82.76, 83.98, 84.95, 83.37, 84.89, 87.29)
+teacher_two_grades <- c(85.15, 95.64, 84.73, 71.46, 95.99, 81.61, 86.55, 79.81, 77.06, 92.86, 83.67, 73.63, 90.12, 80.64, 78.46, 76.86, 104.4, 88.53, 74.62, 91.27, 76.53, 94.37, 84.74, 81.84, 97.69, 70.77, 84.44, 88.06, 91.62, 65.82)
+
+#plot data
+t1_chart <- qplot(teacher_one_grades,
+      geom='histogram',
+      binwidth = .8,  
+      main = 'Teacher One Grades', 
+      ylab = 'Grades',
+      fill=I("blue"), 
+      col=I("red"), 
+      alpha=I(.2)) +
+  geom_vline(aes(xintercept=mean(teacher_one_grades),
+                 color="mean"), linetype="solid",
+             size=1) +
+  scale_color_manual(name = "statistics", values = c(mean = "red" ))
+
+
+
+t1_chart
+
+
+t2_chart <- qplot(teacher_two_grades,
+      geom='histogram',
+      binwidth = .8,  
+      main = 'Teacher Two Grades', 
+      ylab = 'Grades',
+      fill=I("blue"), 
+      col=I("red"), 
+      alpha=I(.2)) +
+  geom_vline(aes(xintercept=mean(teacher_two_grades),
+                 color="mean"), linetype="solid",
+             size=1) +
+  scale_color_manual(name = "statistics", values = c(mean = "red" ))
+
+
+
+t2_chart
+```

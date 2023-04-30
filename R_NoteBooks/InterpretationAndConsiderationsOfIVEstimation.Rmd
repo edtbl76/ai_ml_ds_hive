@@ -1,0 +1,33 @@
+---
+title: "Interpretation and Considerations of IV Estimation"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+library(AER) #load AER package
+
+# import datasets
+video_df <- read.csv("video_data.csv")
+video_df2 <- read.csv("video_data2.csv")
+
+# 2SLS model with email as instrument
+iv_mod <- ivreg(
+  formula = spending ~ streaming | email, 
+  data = video_df
+)
+```
+
+# Checkpoint 1
+```{r}
+# 2SLS model with new instrument
+iv_mod2 <- ivreg(
+  formula = spending ~ streaming | ads,
+  data = video_df2
+)
+```
+# Checkpoint 2
+```{r}
+# Print summaries for both models
+summary(iv_mod)
+summary(iv_mod2)
+```

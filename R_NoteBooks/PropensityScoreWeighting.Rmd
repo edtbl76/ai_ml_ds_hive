@@ -1,0 +1,43 @@
+---
+title: "Propensity Score Weighting"
+output: html-notebook
+---
+
+```{r}
+# import dataset
+los_sample <- read.csv("los_sample.csv")
+```
+
+# Checkpoint 1
+```{r}
+# Print the dataset
+print(los_sample)
+```
+
+# Checkpoint 2
+```{r}
+# Uncomment for IPTW weights for the ATE
+# IPTW = Inverse Probability of Treatment Weighting
+# ATE = Average Treatment Effect (Control AND Treatment)
+los_sample$ATE_weight <- ifelse(
+ los_sample$low_ef == 0,
+ 1 / (1 - los_sample$ps),
+ 1 / los_sample$ps
+)
+# Print the dataset
+print(los_sample)
+```
+
+# Checkpoint 3
+```{r}
+# Uncomment for IPTW weights for the ATT
+# ATT (Average Treatment Effect on the Treated) 
+# Treatment only
+los_sample$ATT_weight <- ifelse(
+ los_sample$low_ef == 0, 
+ los_sample$ps / (1 - los_sample$ps), 
+ 1
+)
+# Print the dataset
+print(los_sample)
+```

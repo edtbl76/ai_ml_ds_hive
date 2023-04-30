@@ -1,0 +1,37 @@
+---
+title: "Assumptions of Simple Linear Regression"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+# load libraries and data
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r read_data}
+#read in data
+conversion <- read.csv("conversion.csv", header = TRUE)
+conversion
+str(conversion)
+```
+
+```{r create_viz}
+# save viz to object
+clicks_dist <- ggplot(conversion, aes(clicks)) + geom_bar()
+
+# print out viz object 
+clicks_dist
+
+# declare mode of clicks
+clicks_mode <- 0
+```
+
+```{r compute_cor}
+# compute correlation
+correlation <- cor.test(conversion$total_convert, conversion$clicks)
+
+# print out estimate value
+correlation$estimate
+```

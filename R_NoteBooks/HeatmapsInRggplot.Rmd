@@ -1,0 +1,27 @@
+---
+title: "Heatmaps"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+
+# Read in our rideshare dataset
+rideshare_df <- read.csv("rideshare_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Construct a heatmap of trip pickup longitude and latitude
+rideshare_heatmap <- ggplot(rideshare_df, aes(x=Pickup.Centroid.Longitude, y=Pickup.Centroid.Latitude)) + geom_bin2d()
+
+
+# Print the plot to see what it looks like
+rideshare_heatmap
+
+# Add binwidths of 0.01 to both variables in our heatmap
+rideshare_heatmap_binwidth <- ggplot(rideshare_df, aes(x=Pickup.Centroid.Longitude, y=Pickup.Centroid.Latitude)) + geom_bin2d(binwidth = c(0.01, 0.01))
+
+# Print the plot to see what it looks like
+rideshare_heatmap_binwidth
+```

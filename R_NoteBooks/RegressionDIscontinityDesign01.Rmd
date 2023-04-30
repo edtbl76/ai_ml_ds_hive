@@ -1,0 +1,54 @@
+---
+title: "Visual Check"
+output: html-notebook
+---
+
+```{r}
+# load ggplot2 library
+library(ggplot2)
+# import dataset
+air_data <- read.csv("air_data.csv")
+```
+# Checkpoint 1
+```{r}
+# create scatter plot with watts as forcing variable and AQI as outcome
+air_scatter <- ggplot(
+  data = air_data,
+  aes(
+    # forcing variable
+    x = watts,
+    # outcome variable
+    y = aqi,
+    # set point color by treatment group
+    color = group,
+    # set point shape by treatement group
+    shape = group
+  )) + 
+  geom_point() +
+  # cutpoint / line at 600 megawatts
+  geom_vline(xintercept = 600, linetype = 'dashed')
+```
+# Checkpoint 2
+```{r}
+# print plot
+print(air_scatter)
+
+# Shows a sharp cutoff. 
+```
+# Checkpoint 3
+```{r}
+# add best-fit lines to air_scatter
+air_scatter2 <- air_scatter + 
+  geom_smooth(
+    # plot separate lines of best fit for each group
+    aes(group = group), 
+    # use linear regression
+    method = "lm")
+
+```
+# Checkpoint 4
+```{r, message=FALSE}
+# print air_scatter2
+print(air_scatter2)
+
+```

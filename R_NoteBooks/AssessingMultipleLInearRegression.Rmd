@@ -1,0 +1,46 @@
+---
+title: "Assessing Multiple Linear Regression"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+# set sampling seed
+set.seed(123)
+# load libraries and data
+library(dplyr)
+library(ggplot2)
+conversion_clean <- read.csv('conversion_clean.csv', header= T)
+# sample training data
+sample <- sample(c(TRUE, FALSE), nrow(conversion_clean), replace = T, prob = c(0.6,0.4))
+train <- conversion_clean[sample, ]
+```
+
+```{r  message=FALSE}
+# build model below
+model <- lm(total_convert ~ impressions + clicks + gender, data=train)
+summary(model)
+
+# define gender_coefficient below
+gender_coefficient <- "c"
+```
+
+```{r  message=FALSE}
+# build second model below
+model2 <- lm(total_convert ~ impressions + clicks, data=train)
+summary(model2)
+
+# compute r-squared below
+rsq_model <- summary(model)$r.squared
+rsq_model
+rsq_model2 <- summary(model2)$r.squared
+rsq_model2
+
+# define best_fit below
+best_fit <- rsq_model
+
+# define gender_diff below
+gender_diff = rsq_model - rsq_model2
+
+sprintf("Based on the results of a series of multiple linear regressions on total_convert, we estimate that user gender accounts for approximately %s percent of the variation in product purchase rate.", gender_diff)
+```
+

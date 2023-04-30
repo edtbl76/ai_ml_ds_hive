@@ -1,0 +1,45 @@
+---
+title: "Customizing Continuous Axes"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+library(dplyr)
+library(plotrix)
+
+# Read in our graduation dataset
+graduation_df <- read.csv("graduation_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Process graduation_df to calculate means and standard errors
+graduation_error_df <- graduation_df %>% 
+  filter(Demographic == "Total Cohort") %>%
+  filter(Status == "Graduated") %>%
+  group_by(Demographic, Year) %>%
+  summarize(Mean.Pct = mean(Pct), 
+            Mean.SE = std.error(Pct)) %>%
+  mutate(SE.Min = Mean.Pct - Mean.SE, 
+         SE.Max = Mean.Pct + Mean.SE, 
+         Year = factor(Year))
+
+
+# Complete the following bar plot by adding a scale_y_continuous layer as described
+graduation_continuous <- 
+  ggplot(graduation_error_df, 
+         aes(x = Year, y = Mean.Pct)) + 
+  geom_bar(stat = "identity") + 
+  geom_errorbar(
+    aes(ymin = SE.Min, ymax = SE.Max), 
+    width = 0.2) + 
+  scale_x_discrete(
+    limits = c("2003", "2004", "2005")) +
+  scale_y_continuous(labels = scales::label_percent())
+
+
+# Print graduation_continuous to see what it looks like
+graduation_continuous
+
+```

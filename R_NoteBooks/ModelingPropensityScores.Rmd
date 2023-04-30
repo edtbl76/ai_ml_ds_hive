@@ -1,0 +1,27 @@
+---
+title: "Modeling Propensity Scores"
+output: html-notebook
+---
+
+```{r}
+# import dataset
+los_data <- read.csv("los_data.csv")
+```
+
+# Checkpoint 1
+```{r}
+# Predict ejection fraction from age and cholesterol
+ef_model <- glm(
+  # formula
+  formula = low_ef ~ age + cholesterol,
+  data = los_data, 
+  # specify logistic regression
+  family = "binomial"
+) 
+```
+# Checkpoint 2
+```{r}
+# Uncomment the code to view the histogram
+ef_ps <- predict(ef_model, type = "response")
+ef_hist <- hist(ef_ps)
+```

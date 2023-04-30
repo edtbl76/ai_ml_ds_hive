@@ -1,0 +1,17 @@
+---
+title: "Interquartile Range"
+output: html_notebook
+---
+
+```{r}
+# small dataset
+dataset = c(-50, -24, -13, -2, 0, 12, 15, 18, 73, 90, 100)
+
+# calculate range and IQR
+dataset_range = max(dataset) - min(dataset)
+dataset_iqr = IQR(dataset)
+
+# print range and IQR
+print(paste("The range of the dataset is ",dataset_range))
+print(paste("The IQR of the dataset is ",dataset_iqr))
+```

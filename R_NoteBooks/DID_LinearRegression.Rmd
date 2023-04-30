@@ -1,0 +1,41 @@
+---
+title: "Estimate Using Linear Regression"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import library
+library(dplyr)
+# import dataset
+tickets <- read.csv("ticket_sales.csv")
+# filter to only 2018 and 2019
+tickets2 <- tickets %>% 
+  filter(year > 2017)
+```
+
+# Checkpoint 1
+```{r}
+# add treatment indicator
+tickets2$treat <- ifelse(tickets2$city == "Sydney", 1, 0)
+```
+
+# Checkpoint 2
+```{r}
+# add time indicator
+tickets2$time <- ifelse(tickets2$year == 2019, 1, 0)
+```
+
+# Checkpoint 3
+```{r}
+# save linear model
+did_reg <- lm(
+  sales ~ treat * time,
+  data = tickets2
+)
+```
+
+# Checkpoint 4
+```{r}
+# view model results
+print(did_reg)
+```

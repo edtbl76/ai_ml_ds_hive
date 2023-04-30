@@ -1,0 +1,45 @@
+---
+title: "Visualizing Model Fit"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+# set sampling seed
+set.seed(123)
+# load libraries and data
+library(dplyr)
+library(ggplot2)
+conversion_clean <- read.csv('conversion_clean.csv', header= T)
+# sample training data
+sample <- sample(c(TRUE, FALSE), nrow(conversion_clean), replace = T, prob = c(0.6,0.4))
+train <- conversion_clean[sample, ]
+```
+
+```{r build_viz}
+# build plot of clicks on total_convert below
+plot <- ggplot(train, aes(clicks, total_convert)) +
+geom_point() +
+# LOESS model
+geom_smooth(method = "lm") + 
+geom_smooth(se = FALSE, color = "red")
+
+plot
+
+# The relationship is less linear when clicks approach 
+# large values
+linear_relationship <- "a"
+```
+
+```{r build_model2}
+# build plot of impressions on total_convert below
+plot_2 <- ggplot(train, aes(impressions, total_convert)) +
+geom_point() + 
+# LOESS model
+geom_smooth(method = "lm") + 
+geom_smooth(se = FALSE, color = "red")
+
+plot_2
+
+# The relationship is less linear when impressions approaches very large values and when impressions is around 500,000.
+linear_relationship_2 <- "c"
+```

@@ -1,0 +1,24 @@
+---
+title: "Performing IPTW in R"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(WeightIt)
+# import dataset
+los_data <- read.csv("los_data.csv")
+```
+
+# Checkpoint 1
+```{r}
+# Create a weightit object called iptw_ef
+iptw_ef <- weightit(
+  # propensity model
+  formula = low_ef ~ age + cholesterol, 
+  data = los_data, 
+  # Use IPTW (Inverse Probability of Treatment Weighting)
+  method = "ps", 
+  estimand = "ATT"
+)
+```

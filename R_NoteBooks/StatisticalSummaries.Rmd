@@ -1,0 +1,31 @@
+---
+title: "Statistical Summaries"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+library(dplyr)
+
+# Read in our graduation dataset
+graduation_df <- read.csv("graduation_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Process graduation_df for our bar plot showing means
+graduation_means_df <- graduation_df %>% 
+  filter(Demographic == "Total Cohort") %>%
+  filter(Status == "Graduated") %>% 
+  mutate(Year = factor(Year))
+
+# Examine graduation_means_df using the head() function
+head(graduation_means_df)
+
+# Create a bar plot named graduation_meanbar showing means
+graduation_meanbar <- ggplot(graduation_means_df, aes(x=Year, y=Pct)) + geom_bar(stat = "summary", fun = "mean")
+
+# Print the bar plot to see what it looks like
+graduation_meanbar
+
+```

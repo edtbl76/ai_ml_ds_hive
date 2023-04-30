@@ -1,0 +1,31 @@
+---
+title: "Histograms"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+
+# Read in our rideshare dataset
+rideshare_df <- read.csv("rideshare_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Examine rideshare_df using head()
+head(rideshare_df)
+
+# Construct a histogram showing the distribution of Trip.Total 
+rideshare_histogram <- ggplot(rideshare_df, aes(x=Trip.Total)) + geom_histogram()
+
+# Print the plot to see what it looks like
+rideshare_histogram
+
+# Construct our histogram again, this time adding a binwidth of 5 
+rideshare_histogram_binwidth <- ggplot(rideshare_df, aes(x=Trip.Total)) + geom_histogram(binwidth = 5)
+
+
+# Print the plot to see what it looks like
+rideshare_histogram_binwidth
+
+```

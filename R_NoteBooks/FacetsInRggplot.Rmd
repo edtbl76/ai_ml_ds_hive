@@ -1,0 +1,36 @@
+---
+title: "Facets"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+library(dplyr)
+
+# Read in our graduation dataset
+graduation_df <- read.csv("graduation_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Process graduation_df to include the demographics we want to show
+graduation_facets_df <- graduation_df %>% 
+  filter(Demographic %in% c("English Language Learners", "English Proficient")) %>%
+  filter(School.ID %in% c("25Q425", "20K490")) %>%
+  filter(Status == "Graduated")
+
+# Complete the bar plot below by adding a facet layer
+graduation_facet <- 
+  ggplot(graduation_facets_df, 
+         aes(x = Year, 
+             y = Pct, 
+             fill = Demographic)) + 
+  geom_col(position = "dodge") + 
+  theme(legend.position = "bottom") + 
+  facet_grid(rows = vars(School.ID))
+
+
+# Print graduation_facet to see what it looks like
+graduation_facet
+
+```

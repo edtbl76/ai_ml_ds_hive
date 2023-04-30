@@ -1,0 +1,32 @@
+---
+title: "The 2 X 2 Case"
+output: html_notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(ggplot2)
+library(dplyr)
+
+# import dataset
+tickets <- read.csv("ticket_sales.csv")
+
+# create a subset of the data between 2018 - 19 for 2 x 2 analysis
+tickets2 <- tickets %>% filter (year > 2017)
+```
+
+# Checkpoint 1
+```{r}
+# view plot
+ggplot(
+  data = tickets2, 
+  aes(
+    x = year, 
+    y = sales, 
+    color = city,
+    linetype = city)) +
+  geom_line(size = 1.5) + 
+  scale_x_continuous(breaks = c(2018, 2019))
+```
+
+

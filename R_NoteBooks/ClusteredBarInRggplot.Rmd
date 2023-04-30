@@ -1,0 +1,34 @@
+---
+title: "Clustered Bar Plots"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+library(dplyr)
+
+# Read in our msleep dataset
+msleep <- read.csv("msleep_cleaned.csv")
+
+# Read in our graduation dataset
+graduation_df <- read.csv("graduation_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Process graduation_df for our clustered bar plot
+graduation_clustered_df <- graduation_df %>% 
+  filter(Demographic %in% c("English Language Learners", "English Proficient")) %>%
+  filter(School.ID == "25Q425") %>%
+  filter(Status == "Graduated")
+
+# Examine graduation_clustered_df using the head() function
+head(graduation_clustered_df)
+
+# Create a clustered bar plot named graduation_clusteredbar
+graduation_clusteredbar <- ggplot(graduation_clustered_df, aes(x = Year, y = Pct, fill = Demographic)) + geom_col(position = "dodge")
+
+# Print the clustered bar plot to see what it looks like
+graduation_clusteredbar
+
+```

@@ -1,0 +1,40 @@
+---
+title: "Advantages and Disadvantages of RDD"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# load rdd and ggplot2 libraries
+library(rdd)
+library(ggplot2)
+
+# import data
+air_data <- read.csv("air_data.csv")
+
+# fit model with bandwidth of 50
+air_rdd_50 <- RDestimate(
+  formula = aqi ~ watts, #outcome model
+  data = air_data, #dataset
+  cutpoint = 600, #cutpoint
+  bw = 50 #bandwidth
+)
+```
+
+# Checkpoint 1
+```{r}
+# Print model results
+print(air_rdd_50)
+
+```
+# Checkpoint 2
+```{r}
+# Check the number of observations
+air_rdd_50$obs
+```
+
+# Checkpoint 3
+```{r}
+# Check the standard errors
+air_rdd_50$se
+
+```

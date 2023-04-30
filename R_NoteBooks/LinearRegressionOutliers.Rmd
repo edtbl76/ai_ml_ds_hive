@@ -1,0 +1,36 @@
+---
+title: "Assumptions of Linear Regression (Outliers)"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+# load libraries and data
+library(dplyr)
+library(ggplot2)
+conversion <- read.csv('conversion.csv', header= T)
+```
+
+```{r create_viz}
+# create viz object
+clicks_bx_plot <- conversion %>%
+  ggplot(aes(clicks, clicks)) +
+  geom_boxplot()
+
+# print out object 
+clicks_bx_plot
+```
+
+```{r filter_data}
+# set threshold value
+threshold <- 100
+
+# remove outliers
+convert_clean <- conversion %>% filter(clicks < threshold)
+
+# creat second box plot 
+clean_bx_plot <- convert_clean %>%
+  ggplot(aes(clicks, clicks)) +
+  geom_boxplot()
+
+clean_bx_plot
+```

@@ -1,0 +1,21 @@
+---
+title: "Box Plots"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+
+# Read in our rideshare dataset
+rideshare_df <- read.csv("rideshare_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Construct a box plot showing Trip.Total by Month
+rideshare_boxplot <- ggplot(rideshare_df, aes(x=factor(Month), y=Trip.Total)) + geom_boxplot()
+
+# Print the plot to see what it looks like
+rideshare_boxplot
+
+```

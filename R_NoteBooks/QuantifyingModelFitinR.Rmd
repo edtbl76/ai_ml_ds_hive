@@ -1,0 +1,42 @@
+---
+title: "Quantifying Model Fit"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+# set sampling seed
+set.seed(123)
+# load libraries and data
+library(dplyr)
+library(ggplot2)
+conversion_clean <- read.csv('conversion_clean.csv', header= T)
+# sample training data
+sample <- sample(c(TRUE, FALSE), nrow(conversion_clean), replace = T, prob = c(0.6,0.4))
+train <- conversion_clean[sample, ]
+```
+
+```{r compute_rse}
+model <- lm(total_convert ~ clicks, data = train)
+# compute avg_rse
+avg_rse = sigma(model) / mean(train$total_convert)
+#uncomment f-string below
+sprintf("The percentage error of the model is %s. Any prediction drawn from this model could be %s percent off from the actual observed value.", avg_rse, avg_rse)
+```
+
+```{r build_model2}
+model_2 <- lm(total_convert ~ impressions, data = train)
+
+```
+
+```{r compute_rsquare}
+# compute r-squared
+r_sq <- summary(model)$r.squared
+r_sq_2 <- summary(model_2)$r.squared
+
+# print out r-squared values
+r_sq
+r_sq_2
+
+# uncomment f-string below
+sprintf("Based on a pair of simple linear regression models, we have determined that %s percent of the variation in user purchase behavior can be explained by the number of times a user viewed on a relevant ad campaign; whereas only %s percent of this variation can be explained by the number of times a user clicked on a relevant ad.", r_sq_2, r_sq)
+```

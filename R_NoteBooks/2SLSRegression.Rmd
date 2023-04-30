@@ -1,0 +1,16 @@
+---
+title: "Two-Stage Least Squares Regression"
+output: html-notebook
+---
+# Outcome = β0 + β1 * Treatment Assignment.
+# Checkpoint 1
+```{r}
+# import data
+video_df <- read.csv("video_data.csv")
+
+```
+# Checkpoint 2
+```{r}
+# view structure of data
+head(video_df)
+```

@@ -1,0 +1,32 @@
+---
+title: "Checking Model Residuals"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+# set sampling seed
+set.seed(123)
+# load libraries and data
+library(dplyr)
+library(ggplot2)
+conversion_clean <- read.csv('conversion_clean.csv', header= T)
+# sample training data
+sample <- sample(c(TRUE, FALSE), nrow(conversion_clean), replace = T, prob = c(0.6,0.4))
+train <- conversion_clean[sample, ]
+```
+
+```{r message=FALSE}
+model <- lm(total_convert ~ clicks, data = train)
+
+#save predicted and residual values to df
+train$estimate <- predict(model)
+train$residuals <- residuals(model)
+
+#create visualization
+plot <- ggplot(train, aes(x=clicks, y=total_convert)) + 
+  geom_point(aes(size = abs(residuals))) + 
+  geom_point(aes(y=estimate), color="blue") + 
+  geom_segment(aes(xend=clicks,yend=estimate), color="gray")
+plot
+
+```

@@ -1,0 +1,34 @@
+---
+title: "Working Example of DID"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(dplyr)
+library(ggplot2)
+# import dataset
+tickets <- read.csv("ticket_sales.csv")
+# view dataset
+head(tickets)
+```
+# Checkpoint 1
+```{r}
+# create plot of ticket sales
+syd_sales <- tickets %>% 
+  filter(city == "Sydney") %>% 
+  ggplot(aes(
+    x = year, 
+    y = sales
+  )) + geom_line()
+
+```
+
+# Checkpoint 2
+```{r}
+# add line at x=2018 and x-axis label
+syd_sales +
+  geom_vline(xintercept = 2018, linetype="dashed") + 
+  scale_x_continuous(breaks = c(2012:2019))
+
+```

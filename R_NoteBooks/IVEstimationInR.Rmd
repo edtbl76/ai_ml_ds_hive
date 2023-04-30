@@ -1,0 +1,36 @@
+---
+title: "IV Estimation in R"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import library
+library(AER)
+# load dataset
+video_df <- read.csv("video_data.csv")
+```
+
+# Checkpoint 1
+```{r}
+# OLS model
+ols_model <- lm(spending ~ streaming, data = video_df)
+```
+# Checkpoint 2
+```{r}
+# print OLS coefficients
+summary(ols_model)
+```
+# Checkpoint 3
+```{r}
+# 2SLS model
+iv_mod <- ivreg(
+  # outcome ~ treatment | instrument
+  formula = spending ~ streaming | email, 
+  data = video_df
+)
+```
+# Checkpoint 4
+```{r}
+# print 2SLS model
+summary(iv_mod)
+```

@@ -1,0 +1,53 @@
+---
+title: "Choosing a Bandwidth"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# load rdd and ggplot2 libraries
+library(rdd)
+library(ggplot2)
+
+# import data
+air_data <- read.csv("air_data.csv")
+
+# scatter plot with cutpoint
+air_scatter <- ggplot(
+  data = air_data, #dataset
+  aes(
+    x = watts, #forcing variable
+    y = aqi, #outcome variable
+    color = group, #color points by group
+    shape = group #shape points by group
+  )
+) +
+  geom_point() + #add points to plot
+  geom_vline(xintercept = 600, linetype = "dashed") #add line
+```
+# Checkpoint 1
+```{r}
+# calculate the IK bandwidth
+air_ik_bw <- IKbandwidth(
+  # forcing variable
+  X = air_data$watts,
+  # outcome variable
+  Y = air_data$aqi,
+  # cutpoint
+  cutpoint = 600
+)
+```
+# Checkpoint 2
+```{r}
+# print air_ik_bw
+print(air_ik_bw)
+```
+# Checkpoint 3
+```{r}
+# add vertical bandwidth lines to air_scatter
+air_scatter2 <- air_scatter + geom_vline(xintercept = 600 + c(-air_ik_bw, air_ik_bw))
+```
+# Checkpoint 4
+```{r}
+# print updated plot
+print(air_scatter2)
+```

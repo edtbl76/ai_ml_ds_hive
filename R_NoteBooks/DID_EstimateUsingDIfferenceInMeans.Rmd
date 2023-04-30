@@ -1,0 +1,40 @@
+---
+title: "Estimate Using Difference in Means"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(ggplot2)
+library(dplyr)
+# import dataset
+tickets <- read.csv("ticket_sales.csv")
+# subset to 2018 and 2019
+tickets2 <- tickets %>% 
+  filter(year > 2017)
+```
+
+# Checkpoint 1
+```{r}
+# print tickets2
+print(tickets2)
+```
+
+# Checkpoint 2
+```{r}
+# save values of Tdiff and Sdiff
+Tdiff <- tickets2$sales[4] - tickets2$sales[3]
+Sdiff <- tickets2$sales[2] - tickets2$sales[1]
+```
+
+# Checkpoint 3
+```{r}
+# subtract Tdiff from Sdiff
+did_means <- Sdiff - Tdiff
+```
+
+# Checkpoint 4
+```{r}
+# print did_means
+print(did_means)
+```

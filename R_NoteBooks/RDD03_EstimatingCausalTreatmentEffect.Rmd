@@ -1,0 +1,39 @@
+---
+title: "Estimating the Causal Treatment Effect"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# load rdd and ggplot2 libraries
+library(rdd)
+library(ggplot2)
+
+# import data
+air_data <- read.csv("air_data.csv")
+
+# calculate the IK bandwidth
+air_ik_bw <- IKbandwidth(
+  X = air_data$watts, #forcing variable
+  Y = air_data$aqi, #outcome variable
+  cutpoint = 600 #cutpoint
+)
+```
+# Checkpoint 1
+```{r}
+# fit local linear regression model
+air_rdd <- RDestimate(
+  # outcome regression model (outcome ~ forcing)
+  formula = aqi ~ watts,
+  # dataset
+  data = air_data,
+  # cutpoint
+  cutpoint = 600,
+  # bandwidth
+  bw = air_ik_bw
+)
+```
+# Checkpoint 2
+```{r}
+# print results of local linear regression
+print(air_rdd)
+```

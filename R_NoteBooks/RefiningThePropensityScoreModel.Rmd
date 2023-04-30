@@ -1,0 +1,40 @@
+---
+title: "Refining the Propensity Score Model"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(WeightIt)
+library(cobalt)
+# import dataset
+los_data <- read.csv("los_data.csv")
+```
+# Checkpoint 1
+```{r}
+# Update formula and uncomment
+iptw_ef2 <- weightit(
+ formula = low_ef ~ age + cholesterol + heart_attack,
+ data = los_data,
+ estimand = "ATT",
+ method = "ps"
+)
+```
+# Checkpoint 2
+```{r}
+# Create Love plot here
+love_update <- love.plot(
+  # weightit object
+  x = iptw_ef2,    
+  # use SMD (Standard MEan Differences) 
+  binary = "std", 
+  # guideline +/- 0.1 thresholds
+  thresholds = c(m = 0.1),
+  colors = c("#E69F00", "#009E73")
+)
+```
+# Checkpoint 3
+```{r}
+# Print love_update
+print(love_update)
+```

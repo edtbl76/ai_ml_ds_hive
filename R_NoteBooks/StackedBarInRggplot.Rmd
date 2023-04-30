@@ -1,0 +1,47 @@
+---
+title: "Stacked Bar Plots"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+library(dplyr)
+
+# Read in our msleep dataset
+msleep <- read.csv("msleep_cleaned.csv")
+
+# Read in our graduation dataset
+graduation_df <- read.csv("graduation_cleaned.csv")
+
+# Print the head of msleep
+head(msleep)
+```
+
+```{r message=FALSE, warning=FALSE}
+# Process graduation_df for our stacked bar plot
+graduation_stacked_df <- graduation_df %>% 
+  filter(Demographic %in% c("General Education", "Special Education")) %>%
+  group_by(Demographic, Year, Status) %>%
+  summarize(N = sum(as.numeric(N)))
+
+# Examine graduation_stacked_df using the head() function
+head(graduation_stacked_df)
+
+# Create a stacked bar plot named graduation_stackedbar
+graduation_stackedbar <- 
+  ggplot(graduation_stacked_df, aes(x = Demographic, y = N, fill = Status)) +
+  geom_col()
+
+# Print the stacked bar plot to see what it looks like
+graduation_stackedbar
+
+# Create a stacked bar plot named graduation_stackedbar, this time with position="fill"
+graduation_stackedbar_fill <- 
+  ggplot(graduation_stacked_df, aes(x = Demographic, y = N, fill = Status)) +
+  geom_col(position = "fill")
+
+# Print the new stacked bar plot to see what it looks like
+graduation_stackedbar_fill
+
+```

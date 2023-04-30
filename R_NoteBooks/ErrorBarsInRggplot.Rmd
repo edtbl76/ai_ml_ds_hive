@@ -1,0 +1,44 @@
+---
+title: "Error Bars"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+```
+
+
+```{r message=FALSE, warning=FALSE}
+# Load packages
+library(ggplot2)
+library(dplyr)
+library(plotrix)
+
+# Read in our graduation dataset
+graduation_df <- read.csv("graduation_cleaned.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+# Process graduation_df to calculate means and standard errors
+graduation_error_df <- graduation_df %>% 
+  filter(Demographic == "Total Cohort") %>%
+  filter(Status == "Graduated") %>%
+  group_by(Demographic, Year) %>%
+  summarize(Mean.Pct = mean(Pct), 
+            Mean.SE = std.error(Pct)) %>%
+  mutate(SE.Min = Mean.Pct - Mean.SE, 
+         SE.Max = Mean.Pct + Mean.SE, 
+         Year = factor(Year))
+
+# Examine graduation_error_df using the head() function
+head(graduation_error_df)
+
+# Create a bar plot named graduation_sebar showing means and standard errors
+graduation_sebar <- ggplot(graduation_error_df, aes(x = Year, y = Mean.Pct)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = SE.Min, ymax = SE.Max), width = 0.2)
+
+
+# Print graduation_sebar to see what it looks like
+graduation_sebar
+
+```
